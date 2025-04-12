@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- Top Loader -->
+    <div id="loader-bar"></div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        </div>
+        <nav class="navbar">
+            <a href="{{ url_for('home') }}" id="nav-home">Home</a>
+            <a href="{{ url_for('politics') }}" id="nav-politics">Politics</a>
+            <a href="{{ url_for('sports') }}" id="nav-sports">Sports</a>
+            <a href="{{ url_for('world') }}" id="nav-world">World</a>
+            <a href="{{ url_for('technology') }}" id="nav-technology">Technology</a>
+            <a href="{{ url_for('entertainment') }}" id="nav-entertainment">Entertainment</a>
+            
+        
+            {% if 'user_id' in session %}
+                <button class="sign-in-btn" onclick="window.location.href='{{ url_for('signout') }}'">Sign Out</button>
+            {% else %}
+                <button class="sign-in-btn" onclick="window.location.href='{{ url_for('signin') }}'">Sign In</button>
+            {% endif %}
+        </nav>
+        <button id="sidebar-toggle">☰</button>
+    </header>
+
+    <!-- Responsive Sidebar -->
+    <aside id="sidebar">
+        <form method="get" action="{{ url_for('search') }}" class="d-flex">
+            <input type="text" class="form-control" name="query" placeholder="Search" value="{{ request.args.get('query', '') }}">
+            <select name="sort_by" class="form-select mx-2">
+                <option value="relevance" {% if request.args.get('sort_by') == 'relevance' %}selected{% endif %}>Relevance</option>
+                <option value="publishedAt" {% if request.args.get('sort_by') == 'publishedAt' %}selected{% endif %}>Newest</option>
+                <option value="popularity" {% if request.args.get('sort_by') == 'popularity' %}selected{% endif %}>Most Popular</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    
+        <!-- Display Trending Keywords -->
+        <div class="trending-keywords mt-3">
+            <h5>Trending Keywords:</h5>
+            <ul class="list-inline">
+                {% for keyword in trending_keywords %}
+                    <li class="list-inline-item">
+                        <a href="{{ url_for('search', query=keyword) }}" class="badge badge-secondary">{{ keyword }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='images/home.png') }}" alt="Home Icon" class="sidebar-icon"> Home
+        </a>
+        <a href="{{ url_for('politics') }}">
+            <img src="{{ url_for('static', filename='images/politics.png') }}" alt="Politics Icon" class="sidebar-icon"> Politics
+        </a>
+        <a href="{{ url_for('sports') }}">
+            <img src="{{ url_for('static', filename='images/sports.png') }}" alt="Sports Icon" class="sidebar-icon"> Sports
+        </a>
+        <a href="{{ url_for('world') }}">
+            <img src="{{ url_for('static', filename='images/world.png') }}" alt="World Icon" class="sidebar-icon"> World
+        </a>
+        <a href="{{ url_for('technology') }}">
+            <img src="{{ url_for('static', filename='images/technology.png') }}" alt="Technology Icon" class="sidebar-icon"> Technology
+        </a>
+        <a href="{{ url_for('entertainment') }}">
+            <img src="{{ url_for('static', filename='images/entertainment.png') }}" alt="Entertainment Icon" class="sidebar-icon"> Entertainment
+        </a>
+        <a href="{{ url_for('about') }}">
+            <img src="{{ url_for('static', filename='images/about.png') }}" alt="About Us Icon" class="sidebar-icon"> About Us
+        </a>
+        <a href="{{ url_for('feedback') }}" >
+            <img src="{{ url_for('static', filename='images/feedback.png') }}" alt="feedback Icon" class="sidebar-icon"> feedback
+        </a>
+        {% if 'user_id' in session %}
+            <a href="{{ url_for('saved_news') }}">
+                <img src="{{ url_for('static', filename='images/saved.png') }}" alt="Saved Icon" class="sidebar-icon"> Saved
+            </a>
+        {% endif %}
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <hr>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About Us Column -->
+                {% if request.endpoint != 'about' %}
+                <div class="col-md-4">
+                    <h5>About Us</h5>
+                    <p>Welcome to our Personalized News Website!
+                        We are a team of dedicated students from Sidharth College, passi..<a href="{{ url_for('about') }}">Read more</a></p>
+                </div>
+                {% endif %}
+                
+                <!-- Adjust the other columns based on the About Us section visibility -->
+                {% if request.endpoint == 'about' %}
+                <div class="col-md-6">
+                {% else %}
+                <div class="col-md-4">
+                {% endif %}
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                        <li><a href="{{ url_for('politics') }}">Politics</a></li>
+                        <li><a href="{{ url_for('sports') }}">Sports</a></li>
+                        <li><a href="{{ url_for('world') }}">World</a></li>
+                        <li><a href="{{ url_for('technology') }}">Technology</a></li>
+                        <li><a href="{{ url_for('entertainment') }}">Entertainment</a></li>
+                        {% if 'user_id' in session %}
+                        <li><a href="{{ url_for('saved_news') }}">Saved</a></li>
+                    {% endif %}
+                        
+                    </ul>
+                </div>
+                
+                <!-- Contact Us Column -->
+                {% if request.endpoint == 'about' %}
+                <div class="col-md-6">
+                {% else %}
+                <div class="col-md-4">
+                {% endif %}
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li>Email: support@socialBat.com</li>
+                        <li>Phone: 889487374</li>
+                        <li>Address: Hamirpur, HP, India</li>
+                    </ul>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center">&copy; 2025 News Website. All rights reserved.</p>
+        </div>
+    </footer>
+    

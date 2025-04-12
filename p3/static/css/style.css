@@ -1,0 +1,373 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F3E5AB;
+    color: #000000;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    bottom: 625px;
+    left: 0;
+    width: 100%;
+    z-index:1;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    padding: 10px 20px;
+    background-color: #00bcd4; /* Cyan Theme */
+    color: white;
+}
+
+.logo img {
+    height: 150px;
+    width: 165px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+.navbar a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar a:hover::before {
+    visibility: visible;
+    transform: scaleX(1);
+}
+
+.navbar a:hover {
+    color: #e0f7fa; /* Lighter Cyan on Hover */
+}
+
+.navbar a.active {
+    color: #007bff; /* Example color: Bootstrap Primary Color */
+    background-color: #e0f7fa; /* Example background color */
+    font-weight: bold; /* Optional: Make it bold */
+    border-radius: 5px; /* Optional: Add some rounded corners */
+    padding: 5px 10px; /* Optional: Add some padding */
+}
+
+
+.navbar .sign-in-btn {
+    background-color: #ffffff;
+    color: #00bcd4;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar .sign-in-btn:hover {
+    background-color: #e0f7fa;
+    color: #005662; /* Darker Cyan */
+}
+
+#sidebar {
+    display: none;
+    position: fixed;
+    top: 0; /* Start at the top */
+    right: -250px; /* Start off-screen */
+    width: 250px;
+    height: 100%; /* Full height */
+    background-color: #005662; /* Deep Blue */
+    padding: 10px;
+    color: white;
+    z-index: 10; /* Higher z-index for the sidebar */
+    transition: right 0.5s ease-in-out; /* Slide-in effect */
+    border-top-left-radius: 15px; /* Curve the top-left corner */
+    border-bottom-left-radius: 15px; /* Curve the bottom-left corner */
+}
+
+#sidebar-toggle {
+    z-index: 11; /* Ensure the toggle button is above the sidebar */
+}
+
+
+#sidebar.show {
+    display: block;
+    right: 0;  /* Slide in from right */
+}
+
+#sidebar a {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    font-size: 1.2rem;  /* Increase the font size for better visibility */
+}
+
+#sidebar a .emoji {
+    margin-right: 10px;  /* Add space between the emoji and text */
+    font-size: 1.5rem;  /* Make the emoji larger */
+}
+
+#sidebar a:hover {
+    color: #e0f7fa; /* Lighter Cyan on Hover */
+    background-color: #0097a7; /* Darker Cyan on Hover */
+    padding: 5px; /* Optional: Adds a bit of padding for a nicer effect */
+}
+
+main {
+    padding: 20px;
+    margin-top: 60px;  /* Add margin to account for fixed header height */
+    transition: margin-right 0.5s ease-in-out;  /* Smooth transition for margin */
+    z-index: 0;
+}
+
+main.sidebar-visible {
+    margin-right: 250px;  /* Shift content to the left when sidebar is visible */
+}
+
+.footer {
+    background-color: #00bcd4;
+    color: white;
+    padding: 20px 0;
+    z-index: 1;
+    position: relative;
+}
+
+.footer h5 {
+    margin-bottom: 15px;
+}
+
+.footer p {
+    margin-bottom: 15px;
+}
+
+.footer .list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+
+.footer .list-unstyled li {
+    margin-bottom: 10px;
+}
+
+.footer .list-unstyled li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer .list-unstyled li a:hover {
+    color: #e0f7fa; /* Lighter Cyan on Hover */
+}
+
+.footer .social-media a {
+    color: white;
+    margin-right: 10px;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer .social-media a:hover {
+    color: #e0f7fa; /* Lighter Cyan on Hover */
+}
+
+/* News Cards Styling */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color:#F0EFE7;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.05) rotate(1deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+/* Hover effect for all cards except those on the About Us page */
+.card:not(.about-us-card):hover {
+    transform: translateY(-10px) scale(1.05) rotate(1deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.card img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #00bcd4;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0097a7;
+}
+
+/* Loader Bar */
+#loader-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0;
+    background-color: green;
+    z-index: 1000;
+    transition: width 1s ease-in-out;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    header, main, footer {
+        padding: 10px;
+    }
+    .navbar {
+        display: none;
+    }
+    #sidebar {
+        display: block;
+    }
+}
+
+/* Sidebar Images Styling */
+.sidebar-icon {
+    width: 30px;  /* Adjust the size of the icons */
+    height: 30px;
+    margin-right: 15px;  /* Add space between the icon and text */
+    vertical-align: middle;  /* Align icons with text */
+    transition: transform 0.3s ease, filter 0.3s ease;  /* Add transition for smooth effect */
+}
+
+#sidebar a:hover .sidebar-icon {
+    transform: scale(1.3) rotate(15deg);  /* Enlarge and rotate icon on hover */
+    filter: brightness(1.2);  /* Brighten the icon on hover */
+}
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+h3 {
+    margin-bottom: 20px;
+    color: #007bff; /* Bootstrap Primary Color */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.text-center a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+/* Custom Title Styling */
+.custom-title {
+    color: #007bff; /* Example color: Bootstrap Primary Color */
+    font-family: 'Arial', sans-serif; /* Example font family */
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center; /* Center-align titles */
+    font-size: 1.75rem; /* Example font size */
+}
+
+/* When the About Us section is present */
+.footer-column.col-md-4 {
+    width: calc((100% / 3) - 20px);
+    margin: 10px;
+}
+
+/* When the About Us section is not present */
+.footer-column.col-md-6 {
+    width: calc((100% / 2) - 20px);
+    margin: 10px;
+}
+.custom-card {
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.remove-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+    background-color: #ff1c1c;
+}
+

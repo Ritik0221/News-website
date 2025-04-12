@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="custom-title">{{title}}</h3>
+        <div class="row">
+            {% for article in news %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ article['urlToImage'] }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ article['title'] }}</h5>
+                            <p class="card-text">{{ article['description'] }}</p>
+                            <a href="{{ article['url'] }}" class="btn btn-primary">Read More</a>
+                            <button class="btn btn-secondary" onclick="textToSpeech('{{ article['description'] }}')">🔊</button>
+                            {% if 'user_id' in session %}
+                                <form action="/save_news" method="POST" style="display:inline;">
+                                    <input type="hidden" name="news_title" value="{{ article['title'] }}">
+                                    <input type="hidden" name="news_description" value="{{ article['description'] }}">
+                                    <input type="hidden" name="news_url" value="{{ article['url'] }}">
+                                    <input type="hidden" name="news_image" value="{{ article['urlToImage'] }}">
+                                    <button type="submit" class="btn btn-warning" onclick ="showSaveNewssuccess()" >&#9733;</button> <!-- Star Symbol -->
+                                </form>
+                            {% else %}
+                                <button class="btn btn-warning"  onclick="showSaveNewsAlert()" >&#9733;</button> <!-- Star Symbol -->
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
